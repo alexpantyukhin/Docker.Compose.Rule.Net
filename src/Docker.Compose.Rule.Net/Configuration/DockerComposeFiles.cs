@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,7 +35,10 @@ namespace Docker.Compose.Rule.Net.Configuration
       }
       
       private static void ValidateAtLeastOneComposeFileSpecified(List<FileInfo> dockerComposeFiles) {
-         //TODO: checkArgument(!dockerComposeFiles.isEmpty(), "A docker compose file must be specified.");
+         if (!dockerComposeFiles.Any())
+         {
+            throw new ArgumentException("A docker compose file must be specified.");
+         }
       }
 
       private static void ValidateComposeFilesExist(List<FileInfo> dockerComposeFiles) {
@@ -42,9 +46,8 @@ namespace Docker.Compose.Rule.Net.Configuration
 
          var errorMessage =
             $"The following docker-compose files: {string.Join(",", missingFiles)}, do not exist.";
-         
-         // TODO: checkState(missingFiles.isEmpty(), errorMessage);
-         Preconditions.CheckState(!missingFiles.Any(), errorMessage);
+
+         Preconditions.CheckState(missingFiles.Any(), errorMessage);
       }
    }
 }

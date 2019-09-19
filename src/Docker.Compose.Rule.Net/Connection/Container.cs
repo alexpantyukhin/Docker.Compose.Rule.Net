@@ -5,13 +5,15 @@ namespace Docker.Compose.Rule.Net.Connection
    public class Container
    {
       private readonly string _containerName;
+      private readonly Execution.Docker _docker;
       private readonly IDockerCompose _dockerCompose;
 
       private Ports _portsMappings;
 
-      public Container(string containerName, IDockerCompose dockerCompose)
+      public Container(string containerName, Execution.Docker docker, IDockerCompose dockerCompose)
       {
          _containerName = containerName;
+         _docker = docker;
          _dockerCompose = dockerCompose;
       }
       
@@ -19,7 +21,7 @@ namespace Docker.Compose.Rule.Net.Connection
       
       public string GetContainerName()
       {
-         throw new System.NotImplementedException();
+         return _containerName;
       }
       
       private Ports PortsMappings
