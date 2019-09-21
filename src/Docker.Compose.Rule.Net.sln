@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker.Compose.Rule.Net", "Docker.Compose.Rule.Net\Docker.Compose.Rule.Net.csproj", "{B11C8BB3-9019-42C3-BB7C-4AD876F85C72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Docker.Compose.Rule.Tests", "Docker.Compose.Rule.Tests\Docker.Compose.Rule.Tests.csproj", "{ED4E8447-1A03-4DF8-BE73-E024821B090E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B11C8BB3-9019-42C3-BB7C-4AD876F85C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B11C8BB3-9019-42C3-BB7C-4AD876F85C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B11C8BB3-9019-42C3-BB7C-4AD876F85C72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED4E8447-1A03-4DF8-BE73-E024821B090E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED4E8447-1A03-4DF8-BE73-E024821B090E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED4E8447-1A03-4DF8-BE73-E024821B090E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED4E8447-1A03-4DF8-BE73-E024821B090E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,7 +5,7 @@ namespace Docker.Compose.Rule.Net.Connection
 {
    public abstract class Cluster
    {
-      public abstract string IP();
+      public abstract string Ip();
 
       public abstract ContainerCache ContainerCache();
 
