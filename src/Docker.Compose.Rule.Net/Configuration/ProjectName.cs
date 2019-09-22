@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Docker.Compose.Rule.Net.Configuration
 {
@@ -9,6 +11,16 @@ namespace Docker.Compose.Rule.Net.Configuration
 
       private ProjectName(string projectName)
       {
+         if (projectName.Trim().Length == 0)
+         {
+            throw new ArgumentException("ProjectName must not be blank.");
+         }
+
+         if (!projectName.All(char.IsLetterOrDigit))
+         {
+            throw new ArgumentException("ProjectName must not be blank.");
+         }
+         
          _projectName = projectName;
       }
 
@@ -22,8 +34,13 @@ namespace Docker.Compose.Rule.Net.Configuration
          return new ProjectName(Guid.NewGuid().ToString().Substring(0, 8));
       }
 
-      public static ProjectName fromString(String name) {
+      public static ProjectName FromString(string name) {
          return new ProjectName(name);
+      }
+
+      public string AsString()
+      {
+         return _projectName;
       }
    }
 }
