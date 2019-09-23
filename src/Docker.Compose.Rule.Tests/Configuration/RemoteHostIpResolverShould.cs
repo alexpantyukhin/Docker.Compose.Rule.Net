@@ -12,13 +12,13 @@ namespace Docker.Compose.Rule.Tests.Configuration
 
       [Test]
       public void result_in_error_blank_when_resolving_invalid_docker_host() {
-         Assert.Throws<InvalidOperationException>(() => { new RemoteHostIpResolver().ResolveIp(""); });
+         Assert.Throws<ArgumentException>(() => { new RemoteHostIpResolver().ResolveIp(""); });
       }
 
       [Test]
       public void result_in_error_null_when_resolving_invalid_docker_host()
       {
-         Assert.Throws<InvalidOperationException>(() => { new RemoteHostIpResolver().ResolveIp(null); });
+         Assert.Throws<ArgumentException>(() => { new RemoteHostIpResolver().ResolveIp(null); });
       }
 
       [Test]
