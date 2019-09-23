@@ -9,7 +9,7 @@ namespace Docker.Compose.Rule.Net.Connection
 
       public string SemanticName { get; }
       
-      private ContainerName(string rawName, string semanticName)
+      public ContainerName(string rawName, string semanticName)
       {
          RawName = rawName;
          SemanticName = semanticName;
@@ -31,7 +31,7 @@ namespace Docker.Compose.Rule.Net.Connection
 
       private static bool ProbablyCustomName(string rawName)
       {
-         throw new NotImplementedException();
+         return !(rawName.Split("_").Length >= 3);
       }
       
       private static string WithoutDirectory(string rawName) {
