@@ -15,6 +15,10 @@ namespace Docker.Compose.Rule.Net.Configuration
          var val = dockerHost.Substring(ind).TrimStart(EnvironmentVariables.TCP_PROTOCOL.ToCharArray());
          var ind2 = val.IndexOf(':');
 
+         if (ind2 == -1)
+         {
+            return val;
+         }
          return val.Substring(0, ind2);
          
 //         return string.Empty;
