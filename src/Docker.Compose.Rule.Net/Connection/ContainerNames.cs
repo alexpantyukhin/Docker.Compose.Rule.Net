@@ -6,12 +6,10 @@ namespace Docker.Compose.Rule.Net.Connection
 {
    public class ContainerNames
    {
-      private const string HEAD_PATTERN = "(\r|\n)";
-      private const string BODY_PATTERN = "(\r|\n)+";
+      private const string HEAD_PATTERN = "[-]+[\r|\n]+";
+      private const string BODY_PATTERN = "[\r|\n]+";
       
       public static List<ContainerName> ParseFromDockerComposePs(string psOutput) {
-         //var rgx = new Regex(HEAD_PATTERN);
-         //var breaks = rgx.Matches(psOutput);
 
          var psHeadAndBody = Regex.Split(psOutput, HEAD_PATTERN);
          if (psHeadAndBody.Length < 2) {
