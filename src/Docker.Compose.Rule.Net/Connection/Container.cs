@@ -36,8 +36,22 @@ namespace Docker.Compose.Rule.Net.Connection
             return _portsMappings;
          }
       }
-      
-      
+
+      public State State
+      {
+         get
+         {
+            var id = _dockerCompose.Id(this);
+            if (id == null)
+            {
+               return State.DOWN;
+            }
+
+            return _docker.State(id);
+         }
+      }
+
+
       private Ports GetDockerPorts() {
 //         try {
             return _dockerCompose.Ports(_containerName);
