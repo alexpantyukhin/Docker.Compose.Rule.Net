@@ -1,3 +1,5 @@
+using System;
+using Docker.Compose.Rule.Net.Connection.Waiting;
 using Docker.Compose.Rule.Net.Execution;
 
 namespace Docker.Compose.Rule.Net.Connection
@@ -58,6 +60,21 @@ namespace Docker.Compose.Rule.Net.Connection
 //         } catch (IOException | InterruptedException e) {
 //            throw Throwables.propagate(e);
 //         }
+      }
+
+      public SuccessOrFailure PortIsListeningOnHttp(in int internalPort, Func<DockerPort,string> urlFunction)
+      {
+         throw new NotImplementedException();
+      }
+
+      public SuccessOrFailure PortIsListeningOnHttpAndCheckStatus2xx(in int internalPort, Func<DockerPort,string> urlFunction)
+      {
+         throw new NotImplementedException();
+      }
+
+      public SuccessOrFailure AreAllPortsOpen()
+      {
+         throw new NotImplementedException();
       }
    }
 }

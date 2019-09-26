@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Polly;
 
 namespace Docker.Compose.Rule.Net.Connection.Waiting
 {
@@ -7,7 +8,7 @@ namespace Docker.Compose.Rule.Net.Connection.Waiting
    {
       private readonly Func<Cluster, SuccessOrFailure> _clusterHealthCheck;
       private readonly TimeSpan _timeout;
-      private SuccessOrFailure _lastSuccessOrFailure = null;
+      private SuccessOrFailure _lastSuccessOrFailure;
 
       public ClusterWait(Func<Cluster, SuccessOrFailure> clusterHealthCheck, TimeSpan timeout)
       {
@@ -15,16 +16,26 @@ namespace Docker.Compose.Rule.Net.Connection.Waiting
          _timeout = timeout;
       }
 
-      public Task WaitUntilReady(Cluster cluster)
+      public void WaitUntilReady(Cluster cluster)
       {
          var pollInterval = MinTimeSpan(TimeSpan.FromMilliseconds(500), _timeout.Divide(20));
-         
-         // TODO fix
-         return Task.CompletedTask;
+
+         var retryCount = Math.Max(_timeout.Milliseconds / pollInterval.Milliseconds, 1);
+
+         var value =
+            Policy
+               .HandleResult<bool>(v => v)
+               .WaitAndRetryAsync(retryCount, index => pollInterval)
+               .ExecuteAsync(() => new Task<bool>(WeHaveSuccess(cluster)))
+               .Result;
+
+         if (!value)
+         {
+            throw new InvalidOperationException(ServiceDidNotStartupExceptionMessage());
+         }
       }
-      
-      private Func<bool> WeHaveSuccess(Cluster cluster,
-         SuccessOrFailure lastSuccessOrFailure) {
+
+      private Func<bool> WeHaveSuccess(Cluster cluster) {
          return () => {
             var successOrFailure = _clusterHealthCheck(cluster);
             _lastSuccessOrFailure = successOrFailure;
