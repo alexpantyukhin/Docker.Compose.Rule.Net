@@ -25,5 +25,15 @@ namespace Docker.Compose.Rule.Net.Connection.Waiting
       {
          return SuccessOrFailure.Failure("Encountered an exception: " + exception.StackTrace);
       }
+      
+      public bool Failed()
+      {
+         return FailureMessage != null;
+      }
+
+      public bool Succeeded()
+      {
+         return !Failed();
+      }
    }
 }

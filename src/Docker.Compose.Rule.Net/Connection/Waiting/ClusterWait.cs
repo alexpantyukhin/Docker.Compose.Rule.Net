@@ -7,6 +7,7 @@ namespace Docker.Compose.Rule.Net.Connection.Waiting
    {
       private readonly Func<Cluster, SuccessOrFailure> _clusterHealthCheck;
       private readonly TimeSpan _timeout;
+      private SuccessOrFailure _lastSuccessOrFailure = null;
 
       public ClusterWait(Func<Cluster, SuccessOrFailure> clusterHealthCheck, TimeSpan timeout)
       {
@@ -14,22 +15,31 @@ namespace Docker.Compose.Rule.Net.Connection.Waiting
          _timeout = timeout;
       }
 
-      public Task WaitUntilReady()
+      public Task WaitUntilReady(Cluster cluster)
       {
          var pollInterval = MinTimeSpan(TimeSpan.FromMilliseconds(500), _timeout.Divide(20));
          
          // TODO fix
-         return Task.FromResult(0);
+         return Task.CompletedTask;
       }
       
-//      private Func<bool> WeHaveSuccess(Cluster cluster,
-//         AtomicReference<Optional<SuccessOrFailure>> lastSuccessOrFailure) {
-//         return () -> {
-//            SuccessOrFailure successOrFailure = clusterHealthCheck.isClusterHealthy(cluster);
-//            lastSuccessOrFailure.set(Optional.of(successOrFailure));
-//            return successOrFailure.succeeded();
-//         };
-//      }
+      private Func<bool> WeHaveSuccess(Cluster cluster,
+         SuccessOrFailure lastSuccessOrFailure) {
+         return () => {
+            var successOrFailure = _clusterHealthCheck(cluster);
+            _lastSuccessOrFailure = successOrFailure;
+            return successOrFailure.Succeeded();
+         };
+      }
+      
+      private string ServiceDidNotStartupExceptionMessage()
+      {
+         var healthCheckFailureMessage = _lastSuccessOrFailure != null
+            ? _lastSuccessOrFailure.FailureMessage
+            : "The healthcheck did not finish before the timeout";
+         
+         return "The cluster failed to pass a startup check: " + healthCheckFailureMessage;
+      }
       
       private static TimeSpan MinTimeSpan(TimeSpan first, TimeSpan second) {
          if (first < second){
