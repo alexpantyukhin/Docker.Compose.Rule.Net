@@ -3,14 +3,19 @@ using System.Linq;
 
 namespace Docker.Compose.Rule.Net.Connection
 {
-   public abstract class Cluster
+   public class Cluster
    {
-      public abstract string Ip();
+      public string Ip { get; }
+      public ContainerCache ContainerCache { get; }
 
-      public abstract ContainerCache ContainerCache();
-
+      public Cluster(string ip, ContainerCache containerCache)
+      {
+         Ip = ip;
+         ContainerCache = containerCache;
+      }
+      
       public Container Container(string name) {
-         return ContainerCache().Container(name);
+         return ContainerCache.Container(name);
       }
 
       public List<Container> Containers(List<string> containerNames) {
@@ -18,7 +23,7 @@ namespace Docker.Compose.Rule.Net.Connection
       }
 
       public List<Container> AllContainers() {
-         return ContainerCache().Containers();
+         return ContainerCache.Containers();
       }
    }
 }

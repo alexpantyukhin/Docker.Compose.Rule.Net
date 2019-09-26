@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
 using Docker.Compose.Rule.Net.Connection.Waiting;
 
 namespace Docker.Compose.Rule.Net.Connection
@@ -46,10 +48,14 @@ namespace Docker.Compose.Rule.Net.Connection
 
    public class DockerPort
    {
+      
+      
       public bool IsListeningNow
       {
          get
          {
+            //var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+            //socket.Connect(ip);
             throw new NotImplementedException();
          }
       }

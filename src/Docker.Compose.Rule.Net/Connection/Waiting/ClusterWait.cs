@@ -20,26 +20,30 @@ namespace Docker.Compose.Rule.Net.Connection.Waiting
       {
          var pollInterval = MinTimeSpan(TimeSpan.FromMilliseconds(500), _timeout.Divide(20));
 
-         var retryCount = Math.Max(_timeout.Milliseconds / pollInterval.Milliseconds, 1);
+         var retryCount = (int) Math.Floor(Math.Max(_timeout.TotalMilliseconds / pollInterval.TotalMilliseconds, 1));
 
+         // TODO: need to make HandleResult works
          var value =
             Policy
-               .HandleResult<bool>(v => v)
-               .WaitAndRetryAsync(retryCount, index => pollInterval)
-               .ExecuteAsync(() => new Task<bool>(WeHaveSuccess(cluster)))
-               .Result;
+               .Handle<Exception>()
+               .WaitAndRetry(retryCount, index => pollInterval)
+               .Execute(WeHaveSuccess(cluster));
 
-         if (!value)
+         if (value.Failed())
          {
             throw new InvalidOperationException(ServiceDidNotStartupExceptionMessage());
          }
       }
 
-      private Func<bool> WeHaveSuccess(Cluster cluster) {
+      private Func<SuccessOrFailure> WeHaveSuccess(Cluster cluster) {
          return () => {
             var successOrFailure = _clusterHealthCheck(cluster);
             _lastSuccessOrFailure = successOrFailure;
-            return successOrFailure.Succeeded();
+            if (successOrFailure.Failed())
+            {
+               throw new InvalidOperationException(ServiceDidNotStartupExceptionMessage());
+            }
+            return successOrFailure;
          };
       }
       
