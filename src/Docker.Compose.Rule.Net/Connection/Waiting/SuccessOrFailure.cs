@@ -35,5 +35,22 @@ namespace Docker.Compose.Rule.Net.Connection.Waiting
       {
          return !Failed();
       }
+
+      public static SuccessOrFailure FromBoolean(bool succeeded, string possibleFailureMessage)
+      {
+         if (succeeded) {
+            return Success();
+         } else {
+            return Failure(possibleFailureMessage);
+         }
+      }
+
+    public SuccessOrFailure MapFailure(Func<string, string> mapper) {
+        if (this.Succeeded()) {
+            return this;
+        } else {
+            return Failure(mapper(FailureMessage));
+        }
+    }
    }
 }

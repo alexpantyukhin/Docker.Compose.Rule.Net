@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Docker.Compose.Rule.Net.Connection.Waiting;
 
 namespace Docker.Compose.Rule.Net.Connection
 {
@@ -21,6 +23,11 @@ namespace Docker.Compose.Rule.Net.Connection
          _ports = new List<DockerPort>() {port};
       }
 
+      public List<DockerPort> GetPorts()
+      {
+         return _ports;
+      }
+
       public static Ports ParseFromDockerComposePs(string psOutput, string dockerMachineIp) {
          //Preconditions.checkArgument(!string.IsNullOrEmpty(psOutput), "No container found");
          //Matcher matcher = PORT_PATTERN.matcher(psOutput);
@@ -39,6 +46,25 @@ namespace Docker.Compose.Rule.Net.Connection
 
    public class DockerPort
    {
-      
+      public bool IsListeningNow
+      {
+         get
+         {
+            throw new NotImplementedException();
+         }
+      }
+
+      public int GetInternalPort
+      {
+         get
+         {
+            throw new NotImplementedException();
+         }
+      }
+
+      public SuccessOrFailure IsHttpRespondingSuccessfully(Func<DockerPort,string> urlFunction, in bool andCheckStatus)
+      {
+         throw new NotImplementedException();
+      }
    }
 }

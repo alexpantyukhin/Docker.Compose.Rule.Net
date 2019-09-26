@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Docker.Compose.Rule.Net.Connection.Waiting;
 using Docker.Compose.Rule.Net.Execution;
 
@@ -62,19 +63,42 @@ namespace Docker.Compose.Rule.Net.Connection
 //         }
       }
 
-      public SuccessOrFailure PortIsListeningOnHttp(in int internalPort, Func<DockerPort,string> urlFunction)
+      public SuccessOrFailure PortIsListeningOnHttp(int internalPort, Func<DockerPort,string> urlFunction)
       {
-         throw new NotImplementedException();
+         return PortIsListeningOnHttp(internalPort, urlFunction, true);
       }
 
-      public SuccessOrFailure PortIsListeningOnHttpAndCheckStatus2xx(in int internalPort, Func<DockerPort,string> urlFunction)
+      public SuccessOrFailure PortIsListeningOnHttpAndCheckStatus2xx(int internalPort, Func<DockerPort,string> urlFunction)
       {
-         throw new NotImplementedException();
+         return PortIsListeningOnHttp(internalPort, urlFunction, false);
+      }
+      
+      public SuccessOrFailure PortIsListeningOnHttp(int internalPort, Func<DockerPort, string> urlFunction, bool andCheckStatus) {
+         try
+         {
+            var port = _portsMappings.GetPorts().FirstOrDefault(p => p.GetInternalPort == internalPort);
+            if (!port.IsListeningNow) {
+               return SuccessOrFailure.Failure("Internal port " + internalPort + " is not listening in container " + _containerName);
+            }
+            return port.IsHttpRespondingSuccessfully(urlFunction, andCheckStatus)
+               .MapFailure(failureMessage => internalPort + " does not have a http response from " + urlFunction(port) + ":\n" + failureMessage);
+         } catch (Exception e) {
+            return SuccessOrFailure.FromException(e);
+         }
       }
 
       public SuccessOrFailure AreAllPortsOpen()
       {
-         throw new NotImplementedException();
+         var unavailablePorts = PortsMappings
+            .GetPorts()
+            .Where(p => !p.IsListeningNow)
+            .Select(p => p.GetInternalPort)
+            .ToList();
+
+         var allPortsOpen =  !unavailablePorts.Any();
+         
+         var failureMessage = "The following ports failed to open: " + unavailablePorts;
+         return SuccessOrFailure.FromBoolean(allPortsOpen, failureMessage);
       }
    }
 }
