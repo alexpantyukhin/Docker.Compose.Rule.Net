@@ -76,7 +76,7 @@ namespace Docker.Compose.Rule.Net.Connection
       public SuccessOrFailure PortIsListeningOnHttp(int internalPort, Func<DockerPort, string> urlFunction, bool andCheckStatus) {
          try
          {
-            var port = _portsMappings.GetPorts().FirstOrDefault(p => p.GetInternalPort == internalPort);
+            var port = _portsMappings.GetPorts().FirstOrDefault(p => p.InternalPort == internalPort);
             if (!port.IsListeningNow) {
                return SuccessOrFailure.Failure("Internal port " + internalPort + " is not listening in container " + _containerName);
             }
@@ -92,7 +92,7 @@ namespace Docker.Compose.Rule.Net.Connection
          var unavailablePorts = PortsMappings
             .GetPorts()
             .Where(p => !p.IsListeningNow)
-            .Select(p => p.GetInternalPort)
+            .Select(p => p.InternalPort)
             .ToList();
 
          var allPortsOpen =  !unavailablePorts.Any();

@@ -1,8 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using Docker.Compose.Rule.Net.Connection.Waiting;
 
 namespace Docker.Compose.Rule.Net.Connection
 {
@@ -43,34 +39,6 @@ namespace Docker.Compose.Rule.Net.Connection
 //            ports.add(new DockerPort(ip, externalPort, internalPort));
 //         }
          return new Ports(ports);
-      }
-   }
-
-   public class DockerPort
-   {
-      
-      
-      public bool IsListeningNow
-      {
-         get
-         {
-            //var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
-            //socket.Connect(ip);
-            throw new NotImplementedException();
-         }
-      }
-
-      public int GetInternalPort
-      {
-         get
-         {
-            throw new NotImplementedException();
-         }
-      }
-
-      public SuccessOrFailure IsHttpRespondingSuccessfully(Func<DockerPort,string> urlFunction, in bool andCheckStatus)
-      {
-         throw new NotImplementedException();
       }
    }
 }
