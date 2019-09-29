@@ -16,7 +16,7 @@ namespace Docker.Compose.Rule.Tests.Connection.Waiting
       [SetUp]
       public void Setup()
       {
-         var docker = new Net.Execution.Docker();
+         var docker = new Net.Execution.Docker(new Command());
          var compose = Substitute.For<IDockerCompose>();
          _container = new Container("test", docker, compose);
       }

@@ -14,7 +14,6 @@ namespace Docker.Compose.Rule.Net.Execution
          _callback = callback;
       }
 
-
       public void Stop(IDockerCompose dockerCompose)
       {
          try {

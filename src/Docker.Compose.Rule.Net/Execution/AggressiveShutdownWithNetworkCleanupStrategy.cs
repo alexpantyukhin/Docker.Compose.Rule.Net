@@ -13,7 +13,7 @@ namespace Docker.Compose.Rule.Net.Execution
 
       public void Shutdown(IDockerCompose dockerCompose, Docker docker)
       {
-         List<ContainerName> runningContainers = dockerCompose.Ps();
+         var runningContainers = dockerCompose.Ps();
 
          //log.info("Shutting down {}", runningContainers.stream().map(ContainerName::semanticName).collect(toList()));
          RemoveContainersCatchingErrors(docker, runningContainers);
@@ -33,7 +33,7 @@ namespace Docker.Compose.Rule.Net.Execution
       private static void RemoveContainers(Docker docker, List<ContainerName> running) {
          var rawContainerNames = running.Select(r =>r.RawName).ToList();
 
-//         docker.rm(rawContainerNames);
+         docker.Rm(rawContainerNames);
 //         log.debug("Finished shutdown");
       }
       

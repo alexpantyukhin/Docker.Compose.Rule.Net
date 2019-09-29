@@ -30,7 +30,7 @@ namespace Docker.Compose.Rule.Net.Execution
 //                  + "see https://circleci.com/docs/docker-btrfs-error/ for more info.");
 
          //log.info("Pruning networks");
-         //docker.pruneNetworks();
+         docker.PruneNetworks();
       }
 
       private bool RemoveContainersCatchingErrors(Docker docker, List<ContainerName> runningContainers)
@@ -46,7 +46,7 @@ namespace Docker.Compose.Rule.Net.Execution
       private static void RemoveContainers(Docker docker, List<ContainerName> running) {
          var rawContainerNames = running.Select(r =>r.RawName).ToList();
 
-//         docker.rm(rawContainerNames);
+         docker.Rm(rawContainerNames);
 //         log.debug("Finished shutdown");
       }
    }
