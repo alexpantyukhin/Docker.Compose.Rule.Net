@@ -28,7 +28,7 @@ namespace Docker.Compose.Rule.Net.Execution
          _retryAttempts = retryAttempts;
       }
 
-      public void Up()
+      public override void Up()
       {
          for (var currRetryAttempt = 0; currRetryAttempt <= _retryAttempts; currRetryAttempt++) {
             try {

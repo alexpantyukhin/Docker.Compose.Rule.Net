@@ -11,99 +11,99 @@ namespace Docker.Compose.Rule.Net.Execution
          DockerCompose = dockerCompose;
       }
       
-      public void Pull()
+      public virtual void Pull()
       {
          DockerCompose.Pull();
       }
 
-      public void Build()
+      public virtual void Build()
       {
          DockerCompose.Build();
       }
 
-      public void Up()
+      public virtual void Up()
       {
          DockerCompose.Up();
       }
 
-      public void Down()
+      public virtual void Down()
       {
          DockerCompose.Down();
       }
 
-      public void Stop()
+      public virtual void Stop()
       {
          DockerCompose.Stop();
       }
 
-      public void Kill()
+      public virtual void Kill()
       {
          DockerCompose.Kill();
       }
 
-      public void Rm()
+      public virtual void Rm()
       {
          DockerCompose.Rm();
       }
 
-      public void Up(Container container)
+      public virtual void Up(Container container)
       {
          DockerCompose.Up();
       }
 
-      public void Start(Container container)
+      public virtual void Start(Container container)
       {
          DockerCompose.Start(container);
       }
 
-      public void Stop(Container container)
+      public virtual void Stop(Container container)
       {
          DockerCompose.Stop();
       }
 
-      public void Kill(Container container)
+      public virtual void Kill(Container container)
       {
          DockerCompose.Kill();
       }
 
-      public string Exec(DockerComposeExecOption dockerComposeExecOption, string containerName,
+      public virtual string Exec(DockerComposeExecOption dockerComposeExecOption, string containerName,
          DockerComposeExecArgument dockerComposeExecArgument)
       {
          return DockerCompose.Exec(dockerComposeExecOption, containerName, dockerComposeExecArgument);
       }
 
-      public string Run(DockerComposeRunOption dockerComposeRunOption, string containerName,
+      public virtual string Run(DockerComposeRunOption dockerComposeRunOption, string containerName,
          DockerComposeRunArgument dockerComposeRunArgument)
       {
          return DockerCompose.Run(dockerComposeRunOption, containerName, dockerComposeRunArgument);
       }
 
-      public List<ContainerName> Ps()
+      public virtual List<ContainerName> Ps()
       {
          return DockerCompose.Ps();
       }
 
-      public string Id(Container container)
+      public virtual string Id(Container container)
       {
          return DockerCompose.Id(container);
       }
 
-      public string Config()
+      public virtual string Config()
       {
          return DockerCompose.Config();
       }
 
-      public List<string> Services()
+      public virtual List<string> Services()
       {
          return  DockerCompose.Services();
       }
 
-      public bool WriteLogs(string container, Stream output)
+      public virtual bool WriteLogs(string container, Stream output)
       {
          return DockerCompose.WriteLogs(container, output);
       }
 
-      public Ports Ports(string service)
+      public virtual Ports Ports(string service)
       {
          return DockerCompose.Ports(service);
       }
