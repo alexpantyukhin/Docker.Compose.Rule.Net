@@ -1,3 +1,4 @@
+using System;
 using Docker.Compose.Rule.Net.Execution;
 
 namespace Docker.Compose.Rule.Net.Configuration
@@ -10,6 +11,8 @@ namespace Docker.Compose.Rule.Net.Configuration
 
    public static class ShutdownStrategy
    {
-      
+      public static IShutdownStrategy CallbackAndThen(Action callback, IShutdownStrategy shutdownStrategy) {
+         return new CallbackThenDelegateShutdownStrategy(shutdownStrategy, callback);
+      }
    }
 }
