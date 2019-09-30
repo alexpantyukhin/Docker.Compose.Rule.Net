@@ -21,7 +21,7 @@ namespace Docker.Compose.Rule.Tests.Connection.Waiting
       public void Setup()
       {
          var dockerCompose = Substitute.For<IDockerCompose>();
-         _containerCache = new ContainerCache(new Net.Execution.Docker(new Command()), dockerCompose);
+         _containerCache = new ContainerCache(new Net.Execution.Docker(new Command(Substitute.For<IExecutable>())), dockerCompose);
          _clusterHealthCheck = null;
          _cluster = new Cluster(Ip, _containerCache);
       }

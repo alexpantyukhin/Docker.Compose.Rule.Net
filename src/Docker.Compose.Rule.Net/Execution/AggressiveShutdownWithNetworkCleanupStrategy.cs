@@ -25,7 +25,7 @@ namespace Docker.Compose.Rule.Net.Execution
          try {
             RemoveContainers(docker, runningContainers);
             
-         } catch (DockerExecutionException exception) {
+         } catch (DockerExecutionException) {
             //log.error("Error while trying to remove containers: {}", exception.getMessage());
          }
       }

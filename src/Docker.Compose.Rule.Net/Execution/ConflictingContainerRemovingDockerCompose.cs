@@ -68,7 +68,7 @@ namespace Docker.Compose.Rule.Net.Execution
       private void RemoveContainers(List<string> containerNames) {
          try {
             _docker.Rm(containerNames);
-         } catch (DockerExecutionException e) {
+         } catch (DockerExecutionException) {
             // there are cases such as in CircleCI where 'docker rm' returns a non-0 exit code and "fails",
             // but container is still effectively removed as far as conflict resolution is concerned. Because
             // of this, be permissive and do not fail task even if 'rm' fails.

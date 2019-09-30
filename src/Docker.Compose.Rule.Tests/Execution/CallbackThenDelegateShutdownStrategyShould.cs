@@ -52,7 +52,7 @@ namespace Docker.Compose.Rule.Tests.Execution
          var deleg = Substitute.For<IShutdownStrategy>();
          var dockerCompose = Substitute.For<IDockerCompose>();
          var callBack = Substitute.For<Action>();
-         var docker = new Net.Execution.Docker(new Command());
+         var docker = new Net.Execution.Docker(new Command(Substitute.For<IExecutable>()));
 
          ShutdownStrategy.CallbackAndThen(callBack, deleg).Shutdown(dockerCompose, docker);
 

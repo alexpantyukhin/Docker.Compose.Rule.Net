@@ -18,5 +18,9 @@ namespace Docker.Compose.Rule.Net.Execution
                                                    && File.Exists(f));
       }
       
+      public override string ToString() {
+         return "DockerCommandLocations{possiblePaths=" + _possiblePaths + "}";
+      }
+      
    }
 }

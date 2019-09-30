@@ -38,7 +38,7 @@ namespace Docker.Compose.Rule.Net.Execution
          try {
             RemoveContainers(docker, runningContainers);
             return true;
-         } catch (DockerExecutionException exception) {
+         } catch (DockerExecutionException) {
             return false;
          }
       }
